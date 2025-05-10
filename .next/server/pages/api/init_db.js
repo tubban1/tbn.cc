@@ -1,0 +1,46 @@
+"use strict";
+/*
+ * ATTENTION: An "eval-source-map" devtool has been used.
+ * This devtool is neither made for production nor for readable output files.
+ * It uses "eval()" calls to create a separate source file with attached SourceMaps in the browser devtools.
+ * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
+ * or disable the default devtool with "devtool: false".
+ * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
+ */
+(() => {
+var exports = {};
+exports.id = "pages/api/init_db";
+exports.ids = ["pages/api/init_db"];
+exports.modules = {
+
+/***/ "mysql2/promise":
+/*!*********************************!*\
+  !*** external "mysql2/promise" ***!
+  \*********************************/
+/***/ ((module) => {
+
+module.exports = require("mysql2/promise");
+
+/***/ }),
+
+/***/ "(api)/./pages/api/init_db.js":
+/*!******************************!*\
+  !*** ./pages/api/init_db.js ***!
+  \******************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ handler)\n/* harmony export */ });\n/* harmony import */ var mysql2_promise__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! mysql2/promise */ \"mysql2/promise\");\n/* harmony import */ var mysql2_promise__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(mysql2_promise__WEBPACK_IMPORTED_MODULE_0__);\n\nasync function handler(req, res) {\n    const connection = await mysql2_promise__WEBPACK_IMPORTED_MODULE_0___default().createConnection({\n        host: \"caboose.proxy.rlwy.net\",\n        user: \"root\",\n        password: \"mytRopuhMJFxLyFcDYDoTIojZeyqzYfj\",\n        database: \"railway\",\n        port: 49094\n    });\n    try {\n        // 1. pages 主表\n        await connection.execute(`\n      CREATE TABLE IF NOT EXISTS pages (\n        uid VARCHAR(16) PRIMARY KEY,\n        password VARCHAR(64) NOT NULL,\n        title TEXT,\n        content TEXT,\n        css_id INT DEFAULT NULL,\n        js_id INT DEFAULT NULL,\n        is_assigned BOOLEAN DEFAULT FALSE,\n        is_sold BOOLEAN DEFAULT FALSE,\n        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,\n        updated_at DATETIME DEFAULT CURRENT_TIMESTAMP\n      )\n    `);\n        // 2. styles 样式表\n        await connection.execute(`\n      CREATE TABLE IF NOT EXISTS styles (\n        id INT PRIMARY KEY AUTO_INCREMENT,\n        name VARCHAR(50),\n        css_content TEXT\n      )\n    `);\n        // 3. scripts 脚本表\n        await connection.execute(`\n      CREATE TABLE IF NOT EXISTS scripts (\n        id INT PRIMARY KEY AUTO_INCREMENT,\n        name VARCHAR(50),\n        js_content TEXT\n      )\n    `);\n        // 4. comments 留言表\n        await connection.execute(`\n      CREATE TABLE IF NOT EXISTS comments (\n        id INT PRIMARY KEY AUTO_INCREMENT,\n        page_uid VARCHAR(16),\n        content TEXT NOT NULL,\n        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,\n        FOREIGN KEY (page_uid) REFERENCES pages(uid) ON DELETE CASCADE\n      )\n    `);\n        // 5. page_views 页面访问记录表\n        await connection.execute(`\n      CREATE TABLE IF NOT EXISTS page_views (\n        id INT PRIMARY KEY AUTO_INCREMENT,\n        page_uid VARCHAR(16),\n        viewed_at DATETIME DEFAULT CURRENT_TIMESTAMP,\n        ip_address VARCHAR(45),\n        user_agent TEXT,\n        FOREIGN KEY (page_uid) REFERENCES pages(uid) ON DELETE CASCADE\n      )\n    `);\n        res.status(200).json({\n            message: \"所有表已成功创建\"\n        });\n    } catch (error) {\n        res.status(500).json({\n            error: error.message\n        });\n    } finally{\n        await connection.end();\n    }\n}\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiKGFwaSkvLi9wYWdlcy9hcGkvaW5pdF9kYi5qcy5qcyIsIm1hcHBpbmdzIjoiOzs7Ozs7QUFBbUM7QUFFcEIsZUFBZUMsT0FBTyxDQUFDQyxHQUFHLEVBQUVDLEdBQUcsRUFBRTtJQUM5QyxNQUFNQyxVQUFVLEdBQUcsTUFBTUosc0VBQXNCLENBQUM7UUFDOUNNLElBQUksRUFBRSx3QkFBd0I7UUFDOUJDLElBQUksRUFBRSxNQUFNO1FBQ1pDLFFBQVEsRUFBRSxrQ0FBa0M7UUFDNUNDLFFBQVEsRUFBRSxTQUFTO1FBQ25CQyxJQUFJLEVBQUUsS0FBSztLQUNaLENBQUM7SUFFRixJQUFJO1FBQ0YsY0FBYztRQUNkLE1BQU1OLFVBQVUsQ0FBQ08sT0FBTyxDQUFDLENBQUM7Ozs7Ozs7Ozs7Ozs7SUFhMUIsQ0FBQyxDQUFDLENBQUM7UUFFSCxnQkFBZ0I7UUFDaEIsTUFBTVAsVUFBVSxDQUFDTyxPQUFPLENBQUMsQ0FBQzs7Ozs7O0lBTTFCLENBQUMsQ0FBQyxDQUFDO1FBRUgsaUJBQWlCO1FBQ2pCLE1BQU1QLFVBQVUsQ0FBQ08sT0FBTyxDQUFDLENBQUM7Ozs7OztJQU0xQixDQUFDLENBQUMsQ0FBQztRQUVILGtCQUFrQjtRQUNsQixNQUFNUCxVQUFVLENBQUNPLE9BQU8sQ0FBQyxDQUFDOzs7Ozs7OztJQVExQixDQUFDLENBQUMsQ0FBQztRQUVILHdCQUF3QjtRQUN4QixNQUFNUCxVQUFVLENBQUNPLE9BQU8sQ0FBQyxDQUFDOzs7Ozs7Ozs7SUFTMUIsQ0FBQyxDQUFDLENBQUM7UUFFSFIsR0FBRyxDQUFDUyxNQUFNLENBQUMsR0FBRyxDQUFDLENBQUNDLElBQUksQ0FBQztZQUFFQyxPQUFPLEVBQUUsVUFBVTtTQUFFLENBQUMsQ0FBQztJQUNoRCxFQUFFLE9BQU9DLEtBQUssRUFBRTtRQUNkWixHQUFHLENBQUNTLE1BQU0sQ0FBQyxHQUFHLENBQUMsQ0FBQ0MsSUFBSSxDQUFDO1lBQUVFLEtBQUssRUFBRUEsS0FBSyxDQUFDRCxPQUFPO1NBQUUsQ0FBQyxDQUFDO0lBQ2pELENBQUMsUUFBUztRQUNSLE1BQU1WLFVBQVUsQ0FBQ1ksR0FBRyxFQUFFLENBQUM7SUFDekIsQ0FBQztBQUNILENBQUMiLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly93aXNoMi8uL3BhZ2VzL2FwaS9pbml0X2RiLmpzPzE3OTgiXSwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IG15c3FsIGZyb20gJ215c3FsMi9wcm9taXNlJztcblxuZXhwb3J0IGRlZmF1bHQgYXN5bmMgZnVuY3Rpb24gaGFuZGxlcihyZXEsIHJlcykge1xuICBjb25zdCBjb25uZWN0aW9uID0gYXdhaXQgbXlzcWwuY3JlYXRlQ29ubmVjdGlvbih7XG4gICAgaG9zdDogJ2NhYm9vc2UucHJveHkucmx3eS5uZXQnLFxuICAgIHVzZXI6ICdyb290JyxcbiAgICBwYXNzd29yZDogJ215dFJvcHVoTUpGeEx5RmNEWURvVElvalpleXF6WWZqJyxcbiAgICBkYXRhYmFzZTogJ3JhaWx3YXknLFxuICAgIHBvcnQ6IDQ5MDk0LFxuICB9KTtcblxuICB0cnkge1xuICAgIC8vIDEuIHBhZ2VzIOS4u+ihqFxuICAgIGF3YWl0IGNvbm5lY3Rpb24uZXhlY3V0ZShgXG4gICAgICBDUkVBVEUgVEFCTEUgSUYgTk9UIEVYSVNUUyBwYWdlcyAoXG4gICAgICAgIHVpZCBWQVJDSEFSKDE2KSBQUklNQVJZIEtFWSxcbiAgICAgICAgcGFzc3dvcmQgVkFSQ0hBUig2NCkgTk9UIE5VTEwsXG4gICAgICAgIHRpdGxlIFRFWFQsXG4gICAgICAgIGNvbnRlbnQgVEVYVCxcbiAgICAgICAgY3NzX2lkIElOVCBERUZBVUxUIE5VTEwsXG4gICAgICAgIGpzX2lkIElOVCBERUZBVUxUIE5VTEwsXG4gICAgICAgIGlzX2Fzc2lnbmVkIEJPT0xFQU4gREVGQVVMVCBGQUxTRSxcbiAgICAgICAgaXNfc29sZCBCT09MRUFOIERFRkFVTFQgRkFMU0UsXG4gICAgICAgIGNyZWF0ZWRfYXQgREFURVRJTUUgREVGQVVMVCBDVVJSRU5UX1RJTUVTVEFNUCxcbiAgICAgICAgdXBkYXRlZF9hdCBEQVRFVElNRSBERUZBVUxUIENVUlJFTlRfVElNRVNUQU1QXG4gICAgICApXG4gICAgYCk7XG5cbiAgICAvLyAyLiBzdHlsZXMg5qC35byP6KGoXG4gICAgYXdhaXQgY29ubmVjdGlvbi5leGVjdXRlKGBcbiAgICAgIENSRUFURSBUQUJMRSBJRiBOT1QgRVhJU1RTIHN0eWxlcyAoXG4gICAgICAgIGlkIElOVCBQUklNQVJZIEtFWSBBVVRPX0lOQ1JFTUVOVCxcbiAgICAgICAgbmFtZSBWQVJDSEFSKDUwKSxcbiAgICAgICAgY3NzX2NvbnRlbnQgVEVYVFxuICAgICAgKVxuICAgIGApO1xuXG4gICAgLy8gMy4gc2NyaXB0cyDohJrmnKzooahcbiAgICBhd2FpdCBjb25uZWN0aW9uLmV4ZWN1dGUoYFxuICAgICAgQ1JFQVRFIFRBQkxFIElGIE5PVCBFWElTVFMgc2NyaXB0cyAoXG4gICAgICAgIGlkIElOVCBQUklNQVJZIEtFWSBBVVRPX0lOQ1JFTUVOVCxcbiAgICAgICAgbmFtZSBWQVJDSEFSKDUwKSxcbiAgICAgICAganNfY29udGVudCBURVhUXG4gICAgICApXG4gICAgYCk7XG5cbiAgICAvLyA0LiBjb21tZW50cyDnlZnoqIDooahcbiAgICBhd2FpdCBjb25uZWN0aW9uLmV4ZWN1dGUoYFxuICAgICAgQ1JFQVRFIFRBQkxFIElGIE5PVCBFWElTVFMgY29tbWVudHMgKFxuICAgICAgICBpZCBJTlQgUFJJTUFSWSBLRVkgQVVUT19JTkNSRU1FTlQsXG4gICAgICAgIHBhZ2VfdWlkIFZBUkNIQVIoMTYpLFxuICAgICAgICBjb250ZW50IFRFWFQgTk9UIE5VTEwsXG4gICAgICAgIGNyZWF0ZWRfYXQgREFURVRJTUUgREVGQVVMVCBDVVJSRU5UX1RJTUVTVEFNUCxcbiAgICAgICAgRk9SRUlHTiBLRVkgKHBhZ2VfdWlkKSBSRUZFUkVOQ0VTIHBhZ2VzKHVpZCkgT04gREVMRVRFIENBU0NBREVcbiAgICAgIClcbiAgICBgKTtcblxuICAgIC8vIDUuIHBhZ2Vfdmlld3Mg6aG16Z2i6K6/6Zeu6K6w5b2V6KGoXG4gICAgYXdhaXQgY29ubmVjdGlvbi5leGVjdXRlKGBcbiAgICAgIENSRUFURSBUQUJMRSBJRiBOT1QgRVhJU1RTIHBhZ2Vfdmlld3MgKFxuICAgICAgICBpZCBJTlQgUFJJTUFSWSBLRVkgQVVUT19JTkNSRU1FTlQsXG4gICAgICAgIHBhZ2VfdWlkIFZBUkNIQVIoMTYpLFxuICAgICAgICB2aWV3ZWRfYXQgREFURVRJTUUgREVGQVVMVCBDVVJSRU5UX1RJTUVTVEFNUCxcbiAgICAgICAgaXBfYWRkcmVzcyBWQVJDSEFSKDQ1KSxcbiAgICAgICAgdXNlcl9hZ2VudCBURVhULFxuICAgICAgICBGT1JFSUdOIEtFWSAocGFnZV91aWQpIFJFRkVSRU5DRVMgcGFnZXModWlkKSBPTiBERUxFVEUgQ0FTQ0FERVxuICAgICAgKVxuICAgIGApO1xuXG4gICAgcmVzLnN0YXR1cygyMDApLmpzb24oeyBtZXNzYWdlOiAn5omA5pyJ6KGo5bey5oiQ5Yqf5Yib5bu6JyB9KTtcbiAgfSBjYXRjaCAoZXJyb3IpIHtcbiAgICByZXMuc3RhdHVzKDUwMCkuanNvbih7IGVycm9yOiBlcnJvci5tZXNzYWdlIH0pO1xuICB9IGZpbmFsbHkge1xuICAgIGF3YWl0IGNvbm5lY3Rpb24uZW5kKCk7XG4gIH1cbn0iXSwibmFtZXMiOlsibXlzcWwiLCJoYW5kbGVyIiwicmVxIiwicmVzIiwiY29ubmVjdGlvbiIsImNyZWF0ZUNvbm5lY3Rpb24iLCJob3N0IiwidXNlciIsInBhc3N3b3JkIiwiZGF0YWJhc2UiLCJwb3J0IiwiZXhlY3V0ZSIsInN0YXR1cyIsImpzb24iLCJtZXNzYWdlIiwiZXJyb3IiLCJlbmQiXSwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///(api)/./pages/api/init_db.js\n");
+
+/***/ })
+
+};
+;
+
+// load runtime
+var __webpack_require__ = require("../../webpack-api-runtime.js");
+__webpack_require__.C(exports);
+var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
+var __webpack_exports__ = (__webpack_exec__("(api)/./pages/api/init_db.js"));
+module.exports = __webpack_exports__;
+
+})();

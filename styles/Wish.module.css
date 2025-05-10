@@ -1,0 +1,921 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+  background-color: #f5f5f5;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  background-image: linear-gradient(to bottom right, #f5f5f5, #e0e0e0);
+}
+
+.wishCard {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  max-width: 800px;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.wishCard:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 50px 50px 0;
+  border-color: transparent #3498db transparent transparent;
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+  font-size: 2rem;
+}
+
+.section {
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px dashed #ddd;
+}
+
+.sectionTitle {
+  font-size: 1.5rem;
+  color: #2c3e50;
+  margin-bottom: 15px;
+  position: relative;
+  padding-left: 15px;
+}
+
+.sectionTitle:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 5px;
+  height: 20px;
+  background-color: #3498db;
+  border-radius: 3px;
+}
+
+.wishContent {
+  line-height: 1.8;
+  color: #444;
+  font-size: 1.1rem;
+  white-space: pre-wrap;
+}
+
+.interactionSection {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  margin: 20px 0;
+}
+
+.interactionTitle {
+  font-size: 1.3rem;
+  color: #2c3e50;
+  margin-bottom: 15px;
+}
+
+.likeButton {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 10px 20px 10px 40px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.3s;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  position: relative;
+}
+
+.likeButton:before {
+  content: "";
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  background: transparent;
+  border-top: 2px solid white;
+  border-right: 2px solid white;
+  transform: translateY(-50%) rotate(135deg);
+}
+
+.likeButton:hover {
+  background-color: #2980b9;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.commentsSection {
+  margin-top: 30px;
+}
+
+.commentForm {
+  margin-bottom: 20px;
+}
+
+.commentInput {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+  margin-bottom: 10px;
+  resize: vertical;
+  min-height: 80px;
+}
+
+.nameInput {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.submitButton {
+  background-color: #2ecc71;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+.submitButton:hover {
+  background-color: #27ae60;
+}
+
+.commentsList {
+  margin-top: 20px;
+}
+
+.commentItem {
+  padding: 15px;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 15px;
+}
+
+.commentAuthor {
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #2c3e50;
+}
+
+.commentDate {
+  font-size: 0.8rem;
+  color: #7f8c8d;
+  margin-bottom: 8px;
+}
+
+.commentContent {
+  line-height: 1.5;
+}
+
+.loading {
+  font-size: 18px;
+  color: #666;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.loadingContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.loadingSpinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid #3498db;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 15px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.error {
+  color: #e74c3c;
+  font-size: 18px;
+  text-align: center;
+}
+
+.notAssigned {
+  color: #e67e22;
+  font-size: 20px;
+  text-align: center;
+  padding: 30px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* 主题效果 */
+.theme1 {
+  background-image: linear-gradient(to bottom right, #f9efff, #e0d8ff);
+}
+
+/* 梦幻星空主题 */
+.dreamySky {
+  background-color: #0a1128;
+  background-image: 
+    radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px),
+    radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 30px),
+    radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 40px);
+  background-size: 550px 550px, 350px 350px, 250px 250px;
+  background-position: 0 0, 40px 60px, 130px 270px;
+  color: #f0f8ff;
+}
+
+.dreamySky .wishCard {
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.dreamySky .title, .dreamySky .sectionTitle {
+  color: #e0f7ff;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+}
+
+.dreamySky .button {
+  background-color: rgba(138, 43, 226, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+}
+
+.dreamySky .button:hover {
+  background-color: rgba(138, 43, 226, 0.9);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* 纸张信笺主题 */
+.paperLetter {
+  background-color: #f8f4e5;
+  background-image: 
+    linear-gradient(90deg, transparent 79px, #abced4 79px, #abced4 81px, transparent 81px),
+    linear-gradient(#eee .1em, transparent .1em);
+  background-size: 100% 1.2em;
+  padding: 20px;
+}
+
+.paperLetter .wishCard {
+  background-color: rgba(255, 255, 255, 0.7);
+  border: 1px solid #d3b683;
+  box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.1);
+  padding: 40px;
+  position: relative;
+}
+
+.paperLetter .wishCard::after {
+  content: "";
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  width: 100px;
+  height: 100px;
+  background-image: url('/stamp.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  opacity: 0.2;
+}
+
+.paperLetter .title, .paperLetter .sectionTitle {
+  color: #5d4037;
+  font-family: 'Brush Script MT', cursive;
+}
+
+.paperLetter .wishContent, .paperLetter .commentContent {
+  font-family: 'Comic Sans MS', cursive;
+  line-height: 1.8;
+}
+
+.paperLetter .button {
+  background-color: #d7ccc8;
+  color: #5d4037;
+  border: 1px solid #a1887f;
+}
+
+.paperLetter .button:hover {
+  background-color: #bcaaa4;
+}
+
+/* 极简黑白主题 */
+.minimalBW {
+  background-color: #ffffff;
+  color: #212121;
+}
+
+.minimalBW .wishCard {
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  max-width: 700px;
+  padding: 40px;
+}
+
+.minimalBW .title {
+  color: #000000;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 300;
+  letter-spacing: -0.5px;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 15px;
+}
+
+.minimalBW .sectionTitle {
+  color: #424242;
+  font-weight: 400;
+  font-size: 1.2rem;
+  margin-top: 30px;
+}
+
+.minimalBW .button {
+  background-color: #212121;
+  color: white;
+  border-radius: 0;
+  padding: 10px 20px;
+  transition: background-color 0.2s;
+}
+
+.minimalBW .button:hover {
+  background-color: #424242;
+}
+
+.minimalBW .commentForm input, 
+.minimalBW .commentForm textarea {
+  border: 1px solid #e0e0e0;
+  border-radius: 0;
+}
+
+.minimalBW .commentItem {
+  border-bottom: 1px solid #f5f5f5;
+}
+
+/* 小清新绿色主题 */
+.freshGreen {
+  background-color: #e8f5e9;
+  background-image: 
+    linear-gradient(120deg, rgba(129, 199, 132, 0.2) 0%, rgba(178, 235, 242, 0.2) 100%),
+    url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50"><path d="M25,2 L2,25 L25,48 L48,25 Z" fill="none" stroke="%2381c784" stroke-width="0.5"/></svg>');
+  color: #2e7d32;
+}
+
+.freshGreen .wishCard {
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 1px solid #a5d6a7;
+  box-shadow: 0 4px 15px rgba(129, 199, 132, 0.2);
+}
+
+.freshGreen .title, .freshGreen .sectionTitle {
+  color: #2e7d32;
+  border-bottom: 2px dotted #a5d6a7;
+}
+
+.freshGreen .button {
+  background-color: #66bb6a;
+  color: white;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.freshGreen .button:hover {
+  background-color: #43a047;
+  transform: translateY(-2px);
+}
+
+.freshGreen .commentForm input, 
+.freshGreen .commentForm textarea {
+  border: 1px solid #a5d6a7;
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+/* 复古像素风主题 */
+.pixelRetro {
+  background-color: #2d2d2d;
+  background-image: 
+    linear-gradient(rgba(0, 0, 0, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.1) 1px, transparent 1px);
+  background-size: 16px 16px;
+  font-family: 'Courier New', monospace;
+  color: #f5f5f5;
+  image-rendering: pixelated;
+}
+
+.pixelRetro .wishCard {
+  background-color: #121212;
+  border: 4px solid #ffffff;
+  box-shadow: 8px 8px 0 #000000;
+  padding: 24px;
+  image-rendering: pixelated;
+}
+
+.pixelRetro .title {
+  color: #ff6b6b;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 3px 3px 0 #000000;
+  padding-bottom: 8px;
+  border-bottom: 4px solid #ffffff;
+}
+
+.pixelRetro .sectionTitle {
+  color: #4ecdc4;
+  text-transform: uppercase;
+  text-shadow: 2px 2px 0 #000000;
+}
+
+.pixelRetro .button {
+  background-color: #ffd166;
+  color: #000000;
+  font-weight: bold;
+  border: 3px solid #000000;
+  box-shadow: 3px 3px 0 #000000;
+  transition: all 0.1s ease;
+  text-transform: uppercase;
+}
+
+.pixelRetro .button:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 #000000;
+}
+
+.pixelRetro .commentItem {
+  border: 2px solid #ffffff;
+  margin-bottom: 16px;
+  padding: 8px;
+}
+
+/* 金色庆典主题 */
+.goldenCelebration {
+  background-color: #0a0a0a;
+  background-image: 
+    radial-gradient(circle, rgba(255, 215, 0, 0.1) 10%, transparent 10.5%),
+    radial-gradient(circle, rgba(255, 215, 0, 0.1) 10%, transparent 10.5%);
+  background-size: 30px 30px;
+  background-position: 0 0, 15px 15px;
+  color: #ffffff;
+}
+
+.goldenCelebration .wishCard {
+  background-color: rgba(10, 10, 10, 0.8);
+  border: 1px solid #ffd700;
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+}
+
+.goldenCelebration .title {
+  color: #ffd700;
+  text-align: center;
+  font-weight: bold;
+  background: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+}
+
+.goldenCelebration .sectionTitle {
+  color: #ffd700;
+  border-bottom: 1px solid #ffd700;
+}
+
+.goldenCelebration .button {
+  background: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+  color: #000000;
+  font-weight: bold;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.goldenCelebration .button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.7);
+}
+
+/* 夜间霓虹主题 */
+.nightNeon {
+  background-color: #0f0f12;
+  color: #ffffff;
+}
+
+.nightNeon .wishCard {
+  background-color: rgba(20, 20, 26, 0.8);
+  border: 1px solid #ff00ff;
+  box-shadow: 0 0 20px rgba(255, 0, 255, 0.3), 
+              inset 0 0 10px rgba(255, 0, 255, 0.2);
+  padding: 30px;
+}
+
+.nightNeon .title {
+  color: #00ffff;
+  text-shadow: 0 0 10px rgba(0, 255, 255, 0.7);
+  text-align: center;
+  font-weight: bold;
+  letter-spacing: 2px;
+  animation: neonPulse 2s infinite alternate;
+}
+
+@keyframes neonPulse {
+  from {
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #00ffff, 0 0 20px #00ffff;
+  }
+  to {
+    text-shadow: 0 0 5px #fff, 0 0 10px #00ffff, 0 0 15px #00ffff, 0 0 20px #00ffff, 0 0 25px #00ffff;
+  }
+}
+
+.nightNeon .sectionTitle {
+  color: #ff00ff;
+  text-shadow: 0 0 10px rgba(255, 0, 255, 0.7);
+  border-bottom: 1px solid #ff00ff;
+}
+
+.nightNeon .button {
+  background-color: transparent;
+  color: #00ffff;
+  border: 1px solid #00ffff;
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+  text-shadow: 0 0 5px rgba(0, 255, 255, 0.7);
+  transition: all 0.3s ease;
+}
+
+.nightNeon .button:hover {
+  background-color: rgba(0, 255, 255, 0.2);
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.8);
+}
+
+/* 童话森林主题 */
+.fairyForest {
+  background-color: #e8f5e9;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path d="M50,10 L60,40 L90,40 L65,60 L75,90 L50,75 L25,90 L35,60 L10,40 L40,40 Z" fill="%23c5e1a5" opacity="0.2"/></svg>');
+  color: #33691e;
+}
+
+.fairyForest .wishCard {
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 20px;
+  border: 2px dashed #aed581;
+  box-shadow: 0 5px 15px rgba(142, 36, 170, 0.2);
+  padding: 30px;
+}
+
+.fairyForest .title {
+  color: #8e24aa;
+  font-family: 'Comic Sans MS', cursive;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.fairyForest .sectionTitle {
+  color: #689f38;
+  font-family: 'Comic Sans MS', cursive;
+  border-bottom: 2px dotted #aed581;
+}
+
+.fairyForest .button {
+  background-color: #8e24aa;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  font-family: 'Comic Sans MS', cursive;
+  transition: all 0.3s ease;
+}
+
+.fairyForest .button:hover {
+  background-color: #6a1b9a;
+  transform: scale(1.05);
+}
+
+/* 旅行明信片主题 */
+.travelPostcard {
+  background-color: #f5f5f5;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path d="M0,0 L100,0 L100,100 L0,100 Z" fill="none" stroke="%23ccc" stroke-width="0.5" stroke-dasharray="5,5"/></svg>');
+  color: #424242;
+}
+
+.travelPostcard .wishCard {
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  position: relative;
+}
+
+.travelPostcard .wishCard::after {
+  content: "";
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 80px;
+  height: 80px;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 80 80"><circle cx="40" cy="40" r="38" fill="none" stroke="%23f44336" stroke-width="2"/><path d="M20,40 L60,40 M40,20 L40,60" stroke="%23f44336" stroke-width="2"/></svg>');
+  opacity: 0.3;
+}
+
+.travelPostcard .title {
+  color: #f44336;
+  font-family: 'Courier New', monospace;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 15px;
+}
+
+.travelPostcard .sectionTitle {
+  color: #3f51b5;
+  font-family: 'Courier New', monospace;
+  letter-spacing: 1px;
+}
+
+.travelPostcard .button {
+  background-color: #3f51b5;
+  color: white;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.travelPostcard .button:hover {
+  background-color: #303f9f;
+}
+
+/* 未来科技主题 */
+.futuristicTech {
+  background-color: #121212;
+  background-image: 
+    linear-gradient(rgba(33, 150, 243, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(33, 150, 243, 0.05) 1px, transparent 1px);
+  background-size: 20px 20px;
+  color: #e0e0e0;
+}
+
+.futuristicTech .wishCard {
+  background-color: rgba(18, 18, 18, 0.8);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(33, 150, 243, 0.3);
+  border-radius: 10px;
+  box-shadow: 0 8px 32px rgba(33, 150, 243, 0.2);
+  padding: 30px;
+}
+
+.futuristicTech .title {
+  color: #2196f3;
+  font-family: 'Arial', sans-serif;
+  letter-spacing: 1px;
+  border-bottom: 1px solid rgba(33, 150, 243, 0.3);
+  padding-bottom: 15px;
+}
+
+.futuristicTech .sectionTitle {
+  color: #64b5f6;
+  font-family: 'Arial', sans-serif;
+  letter-spacing: 0.5px;
+}
+
+.futuristicTech .button {
+  background-color: rgba(33, 150, 243, 0.2);
+  color: #2196f3;
+  border: 1px solid rgba(33, 150, 243, 0.5);
+  border-radius: 5px;
+  backdrop-filter: blur(5px);
+  transition: all 0.3s ease;
+}
+
+.futuristicTech .button:hover {
+  background-color: rgba(33, 150, 243, 0.4);
+  box-shadow: 0 0 15px rgba(33, 150, 243, 0.5);
+}
+
+.waveTheme {
+  background: linear-gradient(to bottom, #f5f5f5, #e0e0e0);
+  position: relative;
+  overflow: hidden;
+}
+
+.waveTheme:before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 150px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z' opacity='.25' fill='%23ffffff'/%3E%3Cpath d='M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z' opacity='.5' fill='%23ffffff'/%3E%3Cpath d='M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z' fill='%23ffffff'/%3E%3C/svg%3E") no-repeat;
+  background-size: cover;
+  background-position: center;
+  z-index: 1;
+}
+
+.bubbleTheme {
+  position: relative;
+  overflow: hidden;
+}
+
+.bubbleTheme:before,
+.bubbleTheme:after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  animation: bubble 15s linear infinite;
+}
+
+.bubbleTheme:before {
+  left: 10%;
+  top: 40%;
+  animation-delay: 0s;
+}
+
+.bubbleTheme:after {
+  left: 20%;
+  top: 60%;
+  width: 15px;
+  height: 15px;
+  animation-delay: 2s;
+}
+
+@keyframes bubble {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-800px) scale(2);
+    opacity: 0;
+  }
+}
+
+.particle {
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: float 20s linear infinite;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0) rotate(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* 黑客帝国主题 */
+.matrixTheme {
+  background-color: #000;
+  color: #0f0;
+  position: relative;
+  overflow: hidden;
+}
+
+.matrixTheme::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 1;
+}
+
+.matrixRain {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2; /* 提高层级 */
+  overflow: hidden;
+  perspective: 1000px;
+}
+
+.matrixWord {
+  position: absolute;
+  white-space: nowrap;
+  transform: translateZ(0);
+  transition: all 0.5s ease;
+  animation: matrixFloat cubic-bezier(0.25, 0.1, 0.25, 1) infinite;
+  z-index: 3; /* 确保文字在前面 */
+  pointer-events: none; /* 防止干扰点击 */
+}
+
+.heart {
+  position: absolute;
+  color: #ff6b9d;
+  font-size: 1.5rem;
+  opacity: 0.8;
+  z-index: 3;
+  animation: heartFloat cubic-bezier(0.37, 0, 0.63, 1) infinite;
+  text-shadow: 0 0 8px #ff6b9d;
+}
+
+@keyframes matrixFloat {
+  0% {
+    transform: translateY(105%) translateZ(0) rotateX(10deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.8;
+  }
+  90% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(-5%) translateZ(0) rotateX(10deg);
+    opacity: 0;
+  }
+}
+
+@keyframes heartFloat {
+  0% {
+    transform: translateY(105%) rotate(0deg) scale(1);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.8;
+  }
+  50% {
+    transform: translateY(50%) rotate(10deg) scale(1.2);
+  }
+  90% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(-5%) rotate(20deg) scale(0.8);
+    opacity: 0;
+  }
+}
+
+.matrixTheme .title {
+  color: #bb00ff;
+  text-shadow: 0 0 10px #bb00ff, 0 0 20px #bb00ff, 0 0 30px #bb00ff;
+  font-family: 'Courier New', monospace;
+  font-size: 5rem;
+  font-weight: bold;
+  letter-spacing: 5px;
+  transform: perspective(500px) rotateX(10deg);
+  margin: 0;
+  padding: 20px;
+  text-align: center;
+  animation: pulse 2s infinite alternate;
+  z-index: 10;
+  position: relative;
+}
+
+@keyframes pulse {
+  0% {
+    text-shadow: 0 0 10px #bb00ff, 0 0 20px #bb00ff;
+    transform: perspective(500px) rotateX(10deg) scale(1);
+  }
+  100% {
+    text-shadow: 0 0 15px #bb00ff, 0 0 30px #bb00ff, 0 0 50px #bb00ff;
+    transform: perspective(500px) rotateX(10deg) scale(1.05);
+  }
+}
+
+.container {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  position: relative;
+}
