@@ -856,7 +856,7 @@
     opacity: 0.8;
   }
   100% {
-    transform: translateY(-20vh) translateZ(0) rotateX(10deg);
+    transform: translateY(-100vh) translateZ(0) rotateX(10deg);
     opacity: 0;
   }
 }
