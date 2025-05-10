@@ -112,8 +112,14 @@ export default function WishPage() {
 
   // 创建黑客帝国文字雨效果
   useEffect(() => {
-    if (!uid) return;
-    if (!page || !content || !content.theme || content.theme !== 'matrixTheme') return;
+    if (!uid || !page) return;
+    
+    // 解析页面内容
+    const content = typeof page.content === 'string' ? 
+      JSON.parse(page.content || '{"wishText":"","name":"","greeting":"","interaction":"","theme":"default"}') : 
+      (page.content || {"wishText":"","name":"","greeting":"","interaction":"","theme":"default"});
+    
+    if (!content.theme || content.theme !== 'matrixTheme') return;
     
     const createMatrixRain = () => {
       // 先清除可能存在的旧文字雨
@@ -137,10 +143,16 @@ export default function WishPage() {
         '七夕', '专属', '相遇', '缘分', '爱情', '永恒'
       ];
       
-      // 创建多个文字元素，向上升的非匀速效果
-      const wordCount = 150; // 增加文字数量
+      // 创建多个文字元素，均匀分布在屏幕上
+      const wordCount = 300; // 大幅增加文字数量，铺满屏幕
       const containerWidth = window.innerWidth;
       const containerHeight = window.innerHeight;
+      
+      // 将屏幕划分为网格，确保文字分布均匀
+      const gridCols = 20;
+      const gridRows = 15;
+      const cellWidth = containerWidth / gridCols;
+      const cellHeight = containerHeight / gridRows;
       
       for (let i = 0; i < wordCount; i++) {
         // 随机选择一个词语
@@ -151,11 +163,16 @@ export default function WishPage() {
         word.classList.add(styles.matrixWord);
         word.textContent = randomText;
         
-        // 随机位置
-        const x = Math.random() * containerWidth;
+        // 计算网格位置，确保文字分布均匀
+        const gridCol = i % gridCols;
+        const gridRow = Math.floor(i / gridCols) % gridRows;
         
-        // 随机大小 (1-3倍)
-        const scale = 0.8 + Math.random() * 2.2;
+        // 在网格单元内随机位置
+        const x = gridCol * cellWidth + Math.random() * cellWidth * 0.8;
+        const y = gridRow * cellHeight + Math.random() * cellHeight * 0.8;
+        
+        // 随机大小 (0.6-3倍)，更大的范围
+        const scale = 0.6 + Math.random() * 2.4;
         
         // 随机深度 (Z轴)
         const z = Math.random() * 500 - 250;
@@ -165,17 +182,17 @@ export default function WishPage() {
         const rotateY = Math.random() * 20 - 10;
         
         // 随机动画时间（非匀速效果）
-        const duration = 15 + Math.random() * 25;
+        const duration = 10 + Math.random() * 30;
         
-        // 随机延迟
-        const delay = Math.random() * 15;
+        // 随机延迟，确保文字不会同时开始动画
+        const delay = Math.random() * 20;
         
         // 随机透明度
         const opacity = 0.5 + Math.random() * 0.5;
         
         // 应用样式
         word.style.left = `${x}px`;
-        word.style.top = `${containerHeight}px`; // 从底部开始
+        word.style.top = `${containerHeight + Math.random() * 100}px`; // 从底部开始，随机高度
         word.style.fontSize = `${scale}rem`;
         word.style.transform = `translateZ(${z}px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
         word.style.animationDuration = `${duration}s`;
@@ -193,7 +210,7 @@ export default function WishPage() {
       }
       
       // 创建心形气泡
-      const heartCount = 70; // 增加心形数量
+      const heartCount = 100; // 增加心形数量
       
       for (let i = 0; i < heartCount; i++) {
         const heart = document.createElement('div');
@@ -217,7 +234,7 @@ export default function WishPage() {
         
         // 应用样式
         heart.style.left = `${x}px`;
-        heart.style.top = `${containerHeight}px`; // 从底部开始
+        heart.style.top = `${containerHeight + Math.random() * 50}px`; // 从底部开始，随机高度
         heart.style.fontSize = `${scale}rem`;
         heart.style.animationDuration = `${duration}s`;
         heart.style.animationDelay = `${delay}s`;
