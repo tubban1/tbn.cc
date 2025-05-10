@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import styles from '../../styles/Edit.module.css';
 
+// 确保组件正确闭合
 export default function EditPage() {
   const router = useRouter();
   const { uid } = router.query;
@@ -10,15 +11,19 @@ export default function EditPage() {
   const [error, setError] = useState(null);
   const [password, setPassword] = useState('');
   const [authenticated, setAuthenticated] = useState(false);
-  // 在 useState 中添加 theme 字段
+  const [message, setMessage] = useState('');
+  const [submitting, setSubmitting] = useState(false);
+  
+  // 在 useState 中添加 matrixTexts 字段
   const [formData, setFormData] = useState({
     title: '',
     wishText: '',
     name: '',
     greeting: '',
+    interactionType: 'like',
     theme: 'default', // 默认主题
+    matrixTexts: [] // 新增字段用于存储黑客帝国主题文字
   });
-  const [message, setMessage] = useState('');
 
   useEffect(() => {
     if (!uid) return;
@@ -74,6 +79,8 @@ export default function EditPage() {
           name: content.name || '',
           greeting: content.greeting || '',
           interactionType: content.interaction?.type || 'like',
+          theme: content.theme || 'default',
+          matrixTexts: Array.isArray(content.matrixTexts) ? content.matrixTexts : [] // 解析 matrixTexts 字段
         });
       } catch (err) {
         setError(err.message);
@@ -103,13 +110,77 @@ export default function EditPage() {
     }));
   };
 
+  // 添加一个新的文字输入组件
+  const MatrixTextsEditor = () => {
+    const [newText, setNewText] = useState('');
+    
+    const addText = () => {
+      if (!newText.trim()) return;
+      setFormData(prev => ({
+        ...prev,
+        matrixTexts: [...prev.matrixTexts, newText.trim()]
+      }));
+      setNewText('');
+    };
+    
+    const removeText = (index) => {
+      setFormData(prev => ({
+        ...prev,
+        matrixTexts: prev.matrixTexts.filter((_, i) => i !== index)
+      }));
+    };
+    
+    return (
+      <div className={styles.matrixTextsEditor}>
+        <h3>黑客帝国主题文字</h3>
+        <p>添加显示在黑客帝国主题中的文字（每行一个）</p>
+        
+        <div className={styles.textInputGroup}>
+          <input
+            type="text"
+            value={newText}
+            onChange={(e) => setNewText(e.target.value)}
+            placeholder="输入文字..."
+            className={styles.textInput}
+          />
+          <button 
+            type="button" 
+            onClick={addText}
+            className={styles.addButton}
+          >
+            添加
+          </button>
+        </div>
+        
+        <div className={styles.textsList}>
+          {formData.matrixTexts.map((text, index) => (
+            <div key={index} className={styles.textItem}>
+              <span>{text}</span>
+              <button 
+                type="button" 
+                onClick={() => removeText(index)}
+                className={styles.removeButton}
+              >
+                删除
+              </button>
+            </div>
+          ))}
+          {formData.matrixTexts.length === 0 && (
+            <p className={styles.noTexts}>暂无自定义文字，将使用默认文字</p>
+          )}
+        </div>
+      </div>
+    );
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage('');
+    setSubmitting(true);
     
     try {
       // 构建新的content结构
-      // 在保存时，确保将主题信息包含在 content 中
+      // 在保存时，确保将主题信息和matrixTexts包含在 content 中
       const content = {
         wishText: formData.wishText,
         name: formData.name,
@@ -119,6 +190,7 @@ export default function EditPage() {
           config: {}
         },
         theme: formData.theme, // 保存主题选择
+        matrixTexts: formData.matrixTexts // 保存黑客帝国主题文字
       };
       
       const res = await fetch(`/api/pages/${uid}`, {
@@ -142,6 +214,8 @@ export default function EditPage() {
       setMessage('更新成功！');
     } catch (err) {
       setMessage(`错误: ${err.message}`);
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -429,7 +503,12 @@ export default function EditPage() {
             </div>
           </div>
           
-          <button type="submit" className={styles.submitButton}>保存更改</button>
+          {/* 当选择黑客帝国主题时显示文字编辑器 */}
+          {formData.theme === 'matrixTheme' && <MatrixTextsEditor />}
+          
+          <button type="submit" className={styles.submitButton} disabled={submitting}>
+            {submitting ? '保存中...' : '保存更改'}
+          </button>
         </form>
         
         {message && <p className={styles.message}>{message}</p>}

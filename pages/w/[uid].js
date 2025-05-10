@@ -116,8 +116,8 @@ export default function WishPage() {
     
     // 解析页面内容
     const content = typeof page.content === 'string' ? 
-      JSON.parse(page.content || '{"wishText":"","name":"","greeting":"","interaction":"","theme":"default"}') : 
-      (page.content || {"wishText":"","name":"","greeting":"","interaction":"","theme":"default"});
+      JSON.parse(page.content || '{"wishText":"","name":"","greeting":"","interaction":"","theme":"default","matrixTexts":[]}') : 
+      (page.content || {"wishText":"","name":"","greeting":"","interaction":"","theme":"default","matrixTexts":[]});
     
     if (!content.theme || content.theme !== 'matrixTheme') return;
     
@@ -137,20 +137,26 @@ export default function WishPage() {
       container.appendChild(matrixRain);
       
       // 定义可能出现的文字
-      const texts = [
+      // 如果用户设置了自定义文字，则使用用户设置的文字，否则使用默认文字
+      const defaultTexts = [
         '不离不弃', '一生一世', '小叶我爱你', '七夕是我们专属',
         '不离', '不弃', '一生', '一世', '小叶', '我爱你',
         '七夕', '专属', '相遇', '缘分', '爱情', '永恒'
       ];
       
+      // 使用用户自定义文字或默认文字
+      const texts = Array.isArray(content.matrixTexts) && content.matrixTexts.length > 0 
+        ? content.matrixTexts 
+        : defaultTexts;
+      
       // 创建多个文字元素，均匀分布在屏幕上
-      const wordCount = 300; // 大幅增加文字数量，铺满屏幕
+      const wordCount = 150; // 减少文字数量，从300减少到150
       const containerWidth = window.innerWidth;
       const containerHeight = window.innerHeight;
       
       // 将屏幕划分为网格，确保文字分布均匀
-      const gridCols = 20;
-      const gridRows = 15;
+      const gridCols = 15;
+      const gridRows = 10;
       const cellWidth = containerWidth / gridCols;
       const cellHeight = containerHeight / gridRows;
       
@@ -169,7 +175,10 @@ export default function WishPage() {
         
         // 在网格单元内随机位置
         const x = gridCol * cellWidth + Math.random() * cellWidth * 0.8;
-        const y = gridRow * cellHeight + Math.random() * cellHeight * 0.8;
+        
+        // 修改初始位置，使文字在一开始就分布在整个屏幕高度范围内
+        // 使用网格行来确定初始高度，确保文字均匀分布在整个屏幕
+        const initialY = -containerHeight + (containerHeight * 2 * (i / wordCount));
         
         // 随机大小 (0.6-3倍)，更大的范围
         const scale = 0.6 + Math.random() * 2.4;
@@ -185,14 +194,15 @@ export default function WishPage() {
         const duration = 10 + Math.random() * 30;
         
         // 随机延迟，确保文字不会同时开始动画
-        const delay = Math.random() * 20;
+        // 使用更小的延迟范围，让文字立即开始动画
+        const delay = Math.random() * 5;
         
         // 随机透明度
         const opacity = 0.5 + Math.random() * 0.5;
         
         // 应用样式
         word.style.left = `${x}px`;
-        word.style.top = `${containerHeight + Math.random() * 100}px`; // 从底部开始，随机高度
+        word.style.top = `${initialY}px`; // 使用新的初始高度计算方式
         word.style.fontSize = `${scale}rem`;
         word.style.transform = `translateZ(${z}px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
         word.style.animationDuration = `${duration}s`;
@@ -210,7 +220,7 @@ export default function WishPage() {
       }
       
       // 创建心形气泡
-      const heartCount = 100; // 增加心形数量
+      const heartCount = 50; // 减少心形数量，从100减少到50
       
       for (let i = 0; i < heartCount; i++) {
         const heart = document.createElement('div');
@@ -219,6 +229,9 @@ export default function WishPage() {
         
         // 随机位置
         const x = Math.random() * containerWidth;
+        
+        // 修改初始位置，使心形在一开始就分布在整个屏幕高度范围内
+        const initialY = -containerHeight + (containerHeight * 2 * (i / heartCount));
         
         // 随机大小 (0.5-3倍)
         const scale = 0.5 + Math.random() * 2.5;
@@ -234,7 +247,7 @@ export default function WishPage() {
         
         // 应用样式
         heart.style.left = `${x}px`;
-        heart.style.top = `${containerHeight + Math.random() * 50}px`; // 从底部开始，随机高度
+        heart.style.top = `${initialY}px`; // 使用新的初始高度计算方式
         heart.style.fontSize = `${scale}rem`;
         heart.style.animationDuration = `${duration}s`;
         heart.style.animationDelay = `${delay}s`;
@@ -341,8 +354,8 @@ export default function WishPage() {
 
   // 解析页面内容
   const content = typeof page.content === 'string' ? 
-    JSON.parse(page.content || '{"wishText":"","name":"","greeting":"","interaction":"","theme":"default"}') : 
-    (page.content || {"wishText":"","name":"","greeting":"","interaction":"","theme":"default"});
+    JSON.parse(page.content || '{"wishText":"","name":"","greeting":"","interaction":"","theme":"default","matrixTexts":[]}') : 
+    (page.content || {"wishText":"","name":"","greeting":"","interaction":"","theme":"default","matrixTexts":[]});
   
   // 确保 interaction 是字符串而不是对象
   const interactionText = typeof content.interaction === 'object' ? 
